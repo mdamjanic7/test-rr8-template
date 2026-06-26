@@ -1,0 +1,76 @@
+## node + cli versions
+v24.17.0
+3.94.3
+installed @shopify/cli: 3.94.3
+installed @shopify/mini-oxygen: 4.1.0
+cli hydrogen mini-oxygen oxygen-workers-types 
+
+## build log (tail)
+╭─ error ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  ENOENT: no such file or directory, stat 'dist/index.js'                     │
+│                                                                              │
+│  To investigate the issue, examine this stack trace:                         │
+│    at async stat (node:internal/fs/promises:1038)                            │
+│    at async QCe (home/runner/work/test-rr8-template/test-rr8-template/node_  │
+│    modules/@shopify/cli/dist/chunk-66TIGB4U.js:249)                          │
+│    at async YA (home/runner/work/test-rr8-template/test-rr8-template/node_m  │
+│    odules/@shopify/cli/dist/index.js:2923)                                   │
+│    at run (home/runner/work/test-rr8-template/test-rr8-template/node_module  │
+│    s/@shopify/cli/dist/index.js:2922)                                        │
+│    at _run (home/runner/work/test-rr8-template/test-rr8-template/node_modul  │
+│    es/@shopify/cli/dist/chunk-SVA22NZQ.js:579)                               │
+│    at runCommand (home/runner/work/test-rr8-template/test-rr8-template/node  │
+│    _modules/@shopify/cli/dist/chunk-SVA22NZQ.js:565)                         │
+│    at async O8t (home/runner/work/test-rr8-template/test-rr8-template/node_  │
+│    modules/@shopify/cli/dist/chunk-SVA22NZQ.js:579)                          │
+│    at async sot (home/runner/work/test-rr8-template/test-rr8-template/node_  │
+│    modules/@shopify/cli/dist/index.js:2454)                                  │
+│    at async Eta (home/runner/work/test-rr8-template/test-rr8-template/node_  │
+│    modules/@shopify/cli/dist/index.js:4388)                                  │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+## dist tree
+dist/client/.vite/manifest.json
+dist/client/assets/CartDrawer-Bt9ijCMM.js
+dist/client/assets/CollectionBrowse-BYjd4HtP.js
+dist/client/assets/CollectionCard-DPj0Y7zb.js
+dist/client/assets/ProductCard-BNO87VAn.js
+dist/client/assets/bootstrap-Cs3MDRY3.js
+dist/client/assets/cart-BKJj7H87.js
+dist/client/assets/cart-drawer-hUT7pGc8.js
+dist/client/assets/catchall-DuOprWdq.js
+dist/client/assets/collection-D5NG02s_.js
+dist/client/assets/collections-CAcU73gp.js
+dist/client/assets/components-BZrICqrh.js
+dist/client/assets/dist-BK_YEa5o.js
+dist/client/assets/entry.client-BVhFRacU.js
+dist/client/assets/home-xev0NdK6.js
+dist/client/assets/jsx-runtime-D0YR_Uwp.js
+dist/client/assets/manifest-73c96667.js
+dist/client/assets/money-fMYmyIa_.js
+dist/client/assets/product-DAEV5lnH.js
+dist/client/assets/react-BPVVD12s.js
+dist/client/assets/root-BmR-BSZL.css
+dist/client/assets/root-_vwOc0iW.js
+dist/client/assets/search-CtzGK9jG.js
+dist/client/favicon.ico
+dist/client/favicon.svg
+dist/client/icons/icon-cart.svg
+dist/client/icons/icon-chevron-down.svg
+dist/client/icons/icon-chevron-left.svg
+dist/client/icons/icon-chevron-right.svg
+dist/client/icons/icon-filter.svg
+dist/client/icons/icon-menu.svg
+dist/client/icons/icon-minus.svg
+dist/client/icons/icon-plus.svg
+dist/client/icons/icon-search.svg
+dist/client/icons/icon-trash.svg
+dist/client/icons/icon-user.svg
+dist/client/icons/icon-x.svg
+dist/server/.vite/manifest.json
+dist/server/index.js
+dist/server/index.js.map
+## build tree
