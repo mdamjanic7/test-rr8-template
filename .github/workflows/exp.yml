@@ -9,26 +9,24 @@ jobs:
         with:
           node-version: "lts/*"
       - run: npm ci
-      - name: "BASELINE: deploy (dummy token) — expect exports error"
+      - name: "BASELINE: deploy --force (dummy token) — expect exports error"
         continue-on-error: true
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: dummy-build-repro-token
         run: |
-          set +e
-          npx shopify hydrogen deploy 2>&1 | tee baseline.log
-          echo "---BASELINE exports-error present?---"
-          grep -c "is not defined by .exports." baseline.log || true
+          npx shopify hydrogen deploy --force > /tmp/baseline.log 2>&1 || true
+          echo "---BASELINE exports-error count (expect >0)---"
+          grep -c "is not defined by .exports." /tmp/baseline.log || true
+          echo "---BASELINE tail---"; tail -20 /tmp/baseline.log
       - name: "PATCH @shopify/hydrogen exports to add ./package.json"
         run: |
-          node -e "const fs=require('fs');const p='node_modules/@shopify/hydrogen/package.json';const j=JSON.parse(fs.readFileSync(p));j.exports['./package.json']='./package.json';fs.writeFileSync(p,JSON.stringify(j,null,2));console.log('patched exports:', JSON.stringify(j.exports['./package.json']))"
-      - name: "AFTER PATCH: deploy (dummy token) — does exports error clear?"
+          node -e "const fs=require('fs');const p='node_modules/@shopify/hydrogen/package.json';const j=JSON.parse(fs.readFileSync(p));j.exports['./package.json']='./package.json';fs.writeFileSync(p,JSON.stringify(j,null,2));console.log('patched')"
+      - name: "AFTER PATCH: deploy --force (dummy token) — does exports error clear?"
         continue-on-error: true
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: dummy-build-repro-token
         run: |
-          set +e
-          npx shopify hydrogen deploy 2>&1 | tee patched.log
-          echo "---AFTER-PATCH exports-error present? (want 0)---"
-          grep -c "is not defined by .exports." patched.log || true
-          echo "---AFTER-PATCH how far did it get (auth/upload = past the bug)---"
-          grep -iE "token|auth|unauthor|upload|deploy|invalid|build" patched.log | tail -8
+          npx shopify hydrogen deploy --force > /tmp/patched.log 2>&1 || true
+          echo "---AFTER-PATCH exports-error count (want 0)---"
+          grep -c "is not defined by .exports." /tmp/patched.log || true
+          echo "---AFTER-PATCH tail (auth/upload error = past the build bug)---"; tail -25 /tmp/patched.log
