@@ -1,0 +1,28 @@
+name: Generate npm lockfile
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gen-lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Generate package-lock.json + verify npm build
+        run: |
+          npm install --registry=https://registry.npmjs.org
+          npm run build
+      - name: Commit lockfile, drop pnpm lock, remove this workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm --quiet pnpm-lock.yaml || true
+          git rm --quiet .github/workflows/gen-lockfile.yml || true
+          git add package-lock.json
+          git commit -m "Switch to npm: add package-lock.json, drop pnpm-lock.yaml" || echo "nothing to commit"
+          git push
