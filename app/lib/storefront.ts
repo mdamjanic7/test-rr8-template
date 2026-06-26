@@ -6,13 +6,13 @@ import {
 } from "@shopify/hydrogen";
 import { createContext } from "react-router";
 
+import type { Env } from "~/lib/env";
 import {
   DEVELOPMENT_BUYER_IP,
   getBuyerIp,
   getPrivateStorefrontToken,
   storefrontConfig,
 } from "~/lib/shop";
-import type { Env } from "~/lib/env";
 
 function getMockBuyerIp(headers: Pick<Headers, "get">): string {
   try {

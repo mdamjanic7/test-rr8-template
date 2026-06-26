@@ -11,8 +11,6 @@
 // is a different data source than the Hydrogen Preview store.)
 // ─────────────────────────────────────────────────────────────────────────────
 
-import type { Env } from "~/lib/env";
-
 export const storefrontConfig = {
   storeDomain: "hydrogen-preview.myshopify.com", // ← replace with your store
   i18n: { country: "US", language: "EN" },
@@ -35,10 +33,10 @@ export const analyticsConsent = {
   language: "EN",
 } as const;
 
-// Private Storefront API token for SSR requests. Read from the environment so a
-// standalone clone supplies it via .env (the dev/start scripts auto-load it) or
-// the host's environment. Never commit a real token.
-export function getPrivateStorefrontToken(env: Env): string {
+// Private Storefront API token for SSR requests. Read from the worker environment
+// so a standalone clone supplies it via .env / Oxygen bindings. Never commit a
+// real token.
+export function getPrivateStorefrontToken(env: Pick<Env, "PRIVATE_STOREFRONT_API_TOKEN">): string {
   const token = env.PRIVATE_STOREFRONT_API_TOKEN;
   if (!token) {
     throw new Error(

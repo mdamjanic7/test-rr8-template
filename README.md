@@ -1,10 +1,10 @@
 # React Router storefront example
 
-A React Router 8 (framework mode, SSR) storefront built on
-[`@shopify/hydrogen`](https://www.npmjs.com/package/@shopify/hydrogen) and ready
-to deploy to [Shopify Oxygen](https://shopify.dev/docs/custom-storefronts/oxygen).
-It's a starting point you can clone and build your store on top of — five pages on
-a shared layout, with a real cart, analytics, and a consent banner wired up.
+A React Router 7 (framework mode, SSR) storefront built on
+[`@shopify/hydrogen`](https://www.npmjs.com/package/@shopify/hydrogen) and the
+classic Hydrogen/Oxygen runtime. It's a starting point you can clone and build
+your store on top of — five pages on a shared layout, with a real cart,
+analytics, and a consent banner wired up.
 
 ## Pages
 
@@ -32,19 +32,20 @@ pnpm install
 ```
 
 **Zero-config demo** — runs against `mock.shop` (a public mock Storefront API, no
-account or token needed). `.env.example` ships with `MOCK_SHOP=1` enabled:
+account or token needed):
 
 ```bash
 cp .env.example .env
+# uncomment MOCK_SHOP=1 in .env
 pnpm dev
 ```
 
 **Against a real store** — set your store domain (in `app/lib/shop.ts`) and a
-**private** Storefront API token, then run:
+**private** Storefront API token, then run normally:
 
 ```bash
-cp .env.example .env   # comment out MOCK_SHOP, add your PRIVATE_STOREFRONT_API_TOKEN
-pnpm dev               # `shopify hydrogen dev` auto-loads .env
+cp .env.example .env   # add your PRIVATE_STOREFRONT_API_TOKEN
+pnpm dev               # the Hydrogen CLI loads .env into the worker environment
 ```
 
 The store coordinates in `app/lib/shop.ts` point at Shopify's public **Hydrogen
@@ -57,9 +58,9 @@ Preview store are different data sources.)
 
 | Script | Does |
 | --- | --- |
-| `pnpm dev` | Start the Hydrogen dev server (Vite + the Oxygen worker runtime). |
-| `pnpm build` | Production build (Oxygen worker bundle). |
-| `pnpm preview` | Build, then serve the production worker locally on the Oxygen runtime. |
+| `pnpm dev` | Start the Hydrogen/Oxygen dev server. |
+| `pnpm build` | Production Oxygen build (`shopify hydrogen build`). |
+| `pnpm preview` | Preview the production build locally with mini-oxygen. |
 | `pnpm typecheck` | React Router typegen + `tsc` + `gql.tada check`. |
 
 ## Where to start

@@ -13,24 +13,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Diagnose build output layout
+      - name: Generate package-lock.json + verify npm build (RR7 Oxygen)
         run: |
           rm -f pnpm-lock.yaml
-          npm install --registry=https://registry.npmjs.org >/dev/null 2>&1 || true
-          {
-            echo "## node + cli versions";
-            node -v;
-            npx shopify version 2>&1 | tail -1 || true;
-            echo "installed @shopify/cli: $(node -p "require('@shopify/cli/package.json').version" 2>/dev/null)";
-            echo "installed @shopify/mini-oxygen: $(node -p "require('@shopify/mini-oxygen/package.json').version" 2>/dev/null)";
-            ls node_modules/@shopify | tr '\n' ' '; echo;
-            echo; echo "## build log (tail)";
-            npm run build 2>&1 | tail -25;
-            echo; echo "## dist tree"; find dist -type f 2>/dev/null | sort;
-            echo "## build tree"; find build -type f 2>/dev/null | sort;
-          } > DIAG.txt 2>&1 || true
+          npm install --registry=https://registry.npmjs.org
+          npm run build
+      - name: Commit lockfile + remove this workflow
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add DIAG.txt
-          git commit -m "diag: capture build output layout + versions" || echo "nothing"
+          rm -f .github/workflows/gen-lockfile.yml
+          git add -A
+          git commit -m "Switch to npm: add package-lock.json, drop pnpm-lock.yaml" || echo "nothing to commit"
           git push
