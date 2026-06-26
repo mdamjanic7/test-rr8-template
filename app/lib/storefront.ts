@@ -11,7 +11,9 @@ import {
   DEVELOPMENT_BUYER_IP,
   getBuyerIp,
   getPrivateStorefrontToken,
+  getStoreDomain,
   storefrontConfig,
+  useMockShop,
 } from "~/lib/shop";
 
 function getMockBuyerIp(headers: Pick<Headers, "get">): string {
@@ -28,7 +30,7 @@ export function createRequestStorefrontClient(
 ): RequestScopedPrivateStorefrontClient {
   const requestContext = createStorefrontRequestContext(request);
 
-  if (env.MOCK_SHOP === "1") {
+  if (useMockShop(env)) {
     return createStorefrontClient({
       type: "private",
       config: {
@@ -45,7 +47,7 @@ export function createRequestStorefrontClient(
   return createStorefrontClient({
     type: "private",
     config: {
-      storeDomain: storefrontConfig.storeDomain,
+      storeDomain: getStoreDomain(env),
       i18n: storefrontConfig.i18n,
       privateStorefrontToken: getPrivateStorefrontToken(env),
       buyerIp: getBuyerIp(request.headers),

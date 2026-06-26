@@ -40,19 +40,21 @@ cp .env.example .env
 pnpm dev
 ```
 
-**Against a real store** — set your store domain (in `app/lib/shop.ts`) and a
-**private** Storefront API token, then run normally:
+**Against a real store** — set your store domain and a **private** Storefront API
+token, then run normally:
 
 ```bash
-cp .env.example .env   # add your PRIVATE_STOREFRONT_API_TOKEN
+cp .env.example .env   # set PUBLIC_STORE_DOMAIN + PRIVATE_STOREFRONT_API_TOKEN
 pnpm dev               # the Hydrogen CLI loads .env into the worker environment
 ```
 
-The store coordinates in `app/lib/shop.ts` point at Shopify's public **Hydrogen
-Preview** store as a placeholder — **replace them with your own store**. Real
-(non-mock) mode requires a private Storefront API token for *your* store; the
-zero-config `MOCK_SHOP=1` demo above needs none. (`mock.shop` and the Hydrogen
-Preview store are different data sources.)
+Mode is **auto-detected**: when a `PRIVATE_STOREFRONT_API_TOKEN` is present the
+app talks to the real store (`PUBLIC_STORE_DOMAIN`, falling back to the default in
+`app/lib/shop.ts`); with none it falls back to the `mock.shop` demo, so a fresh
+deploy always renders. **On Oxygen, a linked storefront injects these env vars
+automatically** — the deployed site connects to your store with no extra config
+(and shows the `mock.shop` demo until it's linked). `MOCK_SHOP=1` forces mock.
+(`mock.shop` and the Hydrogen Preview store are different data sources.)
 
 ## Scripts
 
