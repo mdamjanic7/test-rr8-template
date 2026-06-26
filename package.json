@@ -6,6 +6,7 @@
   "scripts": {
     "build": "shopify hydrogen build --no-lockfile-check",
     "dev": "shopify hydrogen dev",
+    "postinstall": "node patch-hydrogen-exports.mjs",
     "preview": "shopify hydrogen preview",
     "typecheck": "react-router typegen && tsc && gql.tada check"
   },

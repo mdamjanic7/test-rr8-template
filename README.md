@@ -63,6 +63,11 @@ Preview store are different data sources.)
 | `pnpm preview` | Preview the production build locally with mini-oxygen. |
 | `pnpm typecheck` | React Router typegen + `tsc` + `gql.tada check`. |
 
+> **Note:** `patch-hydrogen-exports.mjs` runs on `postinstall` as a temporary
+> shim — it adds the missing `"./package.json"` export to `@shopify/hydrogen` so
+> `shopify hydrogen deploy` builds under npm. Remove it (and the `postinstall`)
+> once `@shopify/hydrogen` ships that export.
+
 ## Where to start
 
 - Swap the store in `app/lib/shop.ts` + `.env`.
